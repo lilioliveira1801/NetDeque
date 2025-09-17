@@ -1,3 +1,4 @@
+using FluentAssertions;
 using NetDeque;
 
 namespace NetDeqTests;
@@ -14,8 +15,11 @@ public class UnitTest1
         int count = novoDeque.Count;
 
         //assert
-        Assert.Equal(0, count);
-        Assert.True(novoDeque.IsEmpty);      
+        //Assert.Equal(0, count);
+        //Assert.True(novoDeque.IsEmpty);
+
+         novoDeque.IsEmpty.Should().BeTrue();
+         count.Should().Be(0);
 
 
     }
@@ -32,7 +36,9 @@ public class UnitTest1
         var resultado = novoDeque.PeekBeg();
 
         //assert
-        Assert.Equal(esperado, resultado);
+        //Assert.Equal(esperado, resultado);
+
+        resultado.Should().Be(esperado);
 
     }
     [Fact]
@@ -49,7 +55,9 @@ public class UnitTest1
         var resultado = novoDeque.PeekBeg();
 
         //assert
-        Assert.Equal(esperado2, resultado);
+        //Assert.Equal(esperado2, resultado);
+
+        resultado.Should().Be(esperado2);
 
     }
 
@@ -65,7 +73,9 @@ public class UnitTest1
         var resultado = novoDeque.PeekEnd();
 
         //assert
-        Assert.Equal(esperado, resultado);
+        //Assert.Equal(esperado, resultado);
+
+        resultado.Should().Be(esperado);
 
     }
     [Fact]
@@ -82,7 +92,9 @@ public class UnitTest1
         var resultado = novoDeque.PeekEnd();
 
         //assert
-        Assert.Equal(esperado2, resultado);
+       // Assert.Equal(esperado2, resultado);
+
+        resultado.Should().Be(esperado2);
 
     }
     [Fact]
@@ -95,8 +107,11 @@ public class UnitTest1
        var resultado = () => novoDeque.RemBeg();
 
         //assert
-        var ex = Assert.Throws<InvalidOperationException>(resultado);
-        Assert.Equal(esperado, ex.Message);
+        //var ex = Assert.Throws<InvalidOperationException>(resultado);
+        //Assert.Equal(esperado, ex.Message);
+
+        resultado.Should().Throw<InvalidOperationException>().WithMessage(esperado);
+
 
     }
     [Fact]
@@ -117,9 +132,11 @@ public class UnitTest1
         var resultado = novoDeque.RemBeg();
 
         //assert
+        //Assert.Equal(esperado2, resultado);
+        //Assert.Equal(1, novoDeque.Count);
 
-        Assert.Equal(esperado2, resultado);
-        Assert.Equal(1, novoDeque.Count);
+        resultado.Should().Be(esperado2);
+        novoDeque.Count.Should().Be(1);
     }
 
     [Fact]
@@ -132,8 +149,10 @@ public class UnitTest1
         var resultado = () => novoDeque.RemEnd();
 
         //assert
-        var ex = Assert.Throws<InvalidOperationException>(resultado);
-        Assert.Equal(esperado, ex.Message);
+        //var ex = Assert.Throws<InvalidOperationException>(resultado);
+        //Assert.Equal(esperado, ex.Message);
+
+        resultado.Should().Throw<InvalidOperationException>().WithMessage(esperado);
 
     }
 
@@ -155,9 +174,11 @@ public class UnitTest1
         var resultado = novoDeque.RemBeg();
 
         //assert
+        //Assert.Equal(esperado2, resultado);
+        //Assert.Equal(1, novoDeque.Count);
 
-        Assert.Equal(esperado2, resultado);
-        Assert.Equal(1, novoDeque.Count);
+        resultado.Should().Be(esperado2);
+        novoDeque.Count.Should().Be(1);
     }
 
     [Fact]
@@ -171,10 +192,13 @@ public class UnitTest1
         var resultadoEnd = () => novoDeque.PeekEnd();
 
         //assert
-        var ex1 = Assert.Throws<InvalidOperationException>(resultadoBeg);
-        var ex2 = Assert.Throws<InvalidOperationException>(resultadoEnd);
-        Assert.Equal(esperado, ex1.Message);
-        Assert.Equal(esperado, ex2.Message);
+        //var ex1 = Assert.Throws<InvalidOperationException>(resultadoBeg);
+        //var ex2 = Assert.Throws<InvalidOperationException>(resultadoEnd);
+        //Assert.Equal(esperado, ex1.Message);
+        //Assert.Equal(esperado, ex2.Message);
+
+        resultadoBeg.Should().Throw<InvalidOperationException>().WithMessage(esperado);
+        resultadoEnd.Should().Throw<InvalidOperationException>().WithMessage(esperado);
 
     }
 
@@ -196,10 +220,13 @@ public class UnitTest1
         var resultadoEnd = novoDeque.PeekEnd();
 
         //assert
+        //Assert.Equal(esperado1, resultadoBeg);
+        //Assert.Equal(esperado3, resultadoEnd);
+        //Assert.Equal(3, novoDeque.Count);
 
-        Assert.Equal(esperado1, resultadoBeg);
-        Assert.Equal(esperado3, resultadoEnd);
-        Assert.Equal(3, novoDeque.Count);
+        resultadoBeg.Should().Be(esperado1);
+        resultadoEnd.Should().Be(esperado3);
+        novoDeque.Count.Should().Be(3);
 
     }
 
@@ -232,9 +259,14 @@ public class UnitTest1
        
 
         //assert
-        Assert.Equal(dequeEsperado.Count, novoDeque.Count);
-        Assert.Equal(dequeEsperado.PeekBeg(), novoDeque.PeekBeg());
-        Assert.Equal(dequeEsperado.PeekEnd(), novoDeque.PeekEnd());
+        //Assert.Equal(dequeEsperado.Count, novoDeque.Count);
+        //Assert.Equal(dequeEsperado.PeekBeg(), novoDeque.PeekBeg());
+        //Assert.Equal(dequeEsperado.PeekEnd(), novoDeque.PeekEnd());
+
+        novoDeque.Count.Should().Be(dequeEsperado.Count);
+        novoDeque.PeekBeg().Should().Be(dequeEsperado.PeekBeg());
+        novoDeque.PeekEnd().Should().Be(dequeEsperado.PeekEnd());
+
 
         while (!dequeEsperado.IsEmpty && !novoDeque.IsEmpty)
         {
@@ -242,8 +274,13 @@ public class UnitTest1
         }
 
         // Garante que os dois esvaziaram juntos
-        Assert.True(dequeEsperado.IsEmpty);
-        Assert.True(novoDeque.IsEmpty);
+        //Assert.True(dequeEsperado.IsEmpty);
+        //Assert.True(novoDeque.IsEmpty);
+
+        dequeEsperado.IsEmpty.Should().BeTrue();
+        novoDeque.IsEmpty.Should().BeTrue();    
+
+
     }
         
 }
